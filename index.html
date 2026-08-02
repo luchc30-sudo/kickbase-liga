@@ -1,0 +1,352 @@
+<title>Kickbase Liga 2026/27</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<style>
+  :root{
+    --bg:#F7F6F3;--card:#fff;--text:#1A1A18;--mid:#5A5A56;--muted:#8A8A82;
+    --accent:#E8652B;--accent-soft:#FEF0E8;--accent-pale:#FFF5EF;
+    --gold:#9E7B1B;--gold-soft:#FDF6E3;
+    --border:#E2E0DB;--stripe:#F2F0EB;--red:#BC4749;
+    --shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:#151210;--card:#221E1B;--text:#E4E2DC;--mid:#A0A098;--muted:#6A6A62;
+    --accent:#F0844E;--accent-soft:#2D1C14;--accent-pale:#251A14;
+    --gold:#D4A843;--gold-soft:#2A2410;
+    --border:#332E2B;--stripe:#272220;--red:#E07678;
+    --shadow:0 1px 3px rgba(0,0,0,.3);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#151210;--card:#221E1B;--text:#E4E2DC;--mid:#A0A098;--muted:#6A6A62;
+    --accent:#F0844E;--accent-soft:#2D1C14;--accent-pale:#251A14;
+    --gold:#D4A843;--gold-soft:#2A2410;
+    --border:#332E2B;--stripe:#272220;--red:#E07678;
+    --shadow:0 1px 3px rgba(0,0,0,.3);
+  }
+  :root[data-theme="light"]{
+    --bg:#F7F6F3;--card:#fff;--text:#1A1A18;--mid:#5A5A56;--muted:#8A8A82;
+    --accent:#E8652B;--accent-soft:#FEF0E8;--accent-pale:#FFF5EF;
+    --gold:#9E7B1B;--gold-soft:#FDF6E3;
+    --border:#E2E0DB;--stripe:#F2F0EB;--red:#BC4749;
+    --shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+  .app{height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto}
+
+  .progress{display:flex;gap:4px;padding:12px 20px 0;flex-shrink:0}
+  .dot{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s}
+  .dot.done{background:var(--accent)}
+  .dot.active{background:var(--accent)}
+
+  .slides{flex:1;position:relative;overflow:hidden}
+  .slide{position:absolute;inset:0;padding:24px 20px 0;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;transform:translateX(60px);transition:opacity .35s,transform .35s;pointer-events:none;display:flex;flex-direction:column}
+  .slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+  .slide.left{opacity:0;transform:translateX(-60px)}
+  .slide-content{flex:1;padding-bottom:20px}
+
+  .bottom{flex-shrink:0;padding:12px 20px 28px;display:flex;gap:10px;align-items:center}
+  .btn{flex:1;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s;-webkit-tap-highlight-color:transparent}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:active{opacity:.85}
+  .btn-back{flex:0;background:none;border:1px solid var(--border);color:var(--mid);padding:14px 16px;border-radius:10px;font-size:14px}
+  .btn-back:active{background:var(--stripe)}
+  .btn-back.hidden{display:none}
+
+  .hero{text-align:center;padding:60px 0 20px}
+  .hero .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:6px}
+  .hero h1{font-family:Georgia,serif;font-size:28px;font-weight:700;line-height:1.2;margin-bottom:8px}
+  .hero .sub{font-size:15px;color:var(--mid);line-height:1.5;max-width:300px;margin:0 auto}
+
+  .sec-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:4px}
+  .sec-title{font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:14px;line-height:1.25}
+
+  .reason{background:var(--accent-pale);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--mid);line-height:1.5}
+
+  ol,ul{padding-left:18px;margin:0 0 12px}
+  li{font-size:13.5px;color:var(--mid);line-height:1.5;margin-bottom:4px}
+  li strong{color:var(--text);font-weight:600}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+
+  h3{font-size:13px;font-weight:700;margin:12px 0 6px;color:var(--text)}
+
+  .dt{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 10px}
+  .dt th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:4px 6px;border-bottom:2px solid var(--border);font-weight:600}
+  .dt th:last-child{text-align:right}
+  .dt td{padding:4px 6px;border-bottom:1px solid var(--border);color:var(--mid)}
+  .dt tr:nth-child(even) td{background:var(--stripe)}
+  .dt .r{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;color:var(--text)}
+  .dt .warn td{color:var(--red)}
+
+  .cat-label{font-size:12.5px;font-weight:700;color:var(--text);margin:8px 0 3px}
+
+  .note{font-size:12px;color:var(--muted);font-style:italic;margin:4px 0 10px}
+
+  .wheel{text-align:center;padding:16px;margin:10px 0}
+  .wheel .icon{font-size:36px;margin-bottom:6px}
+
+  .final-box{background:var(--accent-soft);border-radius:10px;padding:18px;text-align:center;margin:16px 0}
+  .final-box p{font-size:14px;font-weight:600;margin-bottom:4px}
+  .final-box .sub{font-size:12.5px;font-weight:400;color:var(--mid)}
+
+  .iban-box{background:var(--gold-soft);border:1px solid var(--gold);border-radius:8px;padding:14px;text-align:center;margin:14px 0}
+  .iban-box .label{font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+  .iban-box code{font-family:'SF Mono',Menlo,monospace;font-size:13px;font-weight:600;color:var(--text);background:none;letter-spacing:.04em}
+  .iban-box .or{font-size:12px;color:var(--muted);margin-top:4px}
+
+  code{font-family:'SF Mono',Menlo,monospace;font-size:11px;background:var(--stripe);padding:2px 4px;border-radius:3px}
+
+  .explain{font-size:12.5px;color:var(--mid);line-height:1.5;margin-top:10px;padding:10px 12px;background:var(--stripe);border-radius:6px}
+  .explain strong{color:var(--text)}
+
+  @media(min-width:481px){.hero{padding-top:80px}.hero h1{font-size:32px}}
+</style>
+
+<div class="app">
+  <div class="progress" id="progress"></div>
+
+  <div class="slides" id="slides">
+
+    <!-- 0: Intro -->
+    <div class="slide active" data-idx="0">
+      <div class="slide-content">
+        <div class="hero">
+          <div class="eyebrow">Saison 2026/27</div>
+          <h1>Du bist eingeladen zur Kickbase Liga</h1>
+          <p class="sub">Fantasy Bundesliga mit Echtgeld, Head-to-Head-Duellen und einem 480-Euro-Pot. Auf den nächsten Seiten erfährst du, wie es funktioniert.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1: § 1 -->
+    <div class="slide" data-idx="1">
+      <div class="slide-content">
+        <div class="sec-label">§ 1</div>
+        <div class="sec-title">Liga & Einsatz</div>
+        <div class="reason">Der Einsatz sorgt dafür, dass jeder dabei bleibt und es sich lohnt. Head to Head macht jeden einzelnen Spieltag spannend.</div>
+        <ol>
+          <li><strong>30 € Einsatz</strong> per IBAN oder Wise</li>
+          <li>Deadline: <strong>1 Tag vor Liga-Start</strong> — mit Zahlung wirst du aufgenommen</li>
+          <li>Liga startet <strong>2 Wochen vor dem 1. Bundesliga-Spieltag</strong></li>
+          <li><strong>Head to Head</strong> — Sieg 3 Punkte, Unentschieden 1, Niederlage 0</li>
+          <li>Managerzahl muss <strong>gerade</strong> sein — bei ungerader Zahl kommt ein Bot</li>
+          <li>Liga <strong>geschlossen</strong> nach Spieltag 1</li>
+          <li><strong>Soft Reset nach Spieltag 15</strong> — neuer Kader + 50 Mio. Budget, H2H-Tabelle bleibt</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 2: § 2 -->
+    <div class="slide" data-idx="2">
+      <div class="slide-content">
+        <div class="sec-label">§ 2</div>
+        <div class="sec-title">Transfers</div>
+        <div class="reason">Ohne klare Regeln konnten befreundete Manager sich gegenseitig Budget zuschieben. Der Preisdeckel und die Ankündigungspflicht sorgen dafür, dass jeder die gleichen Chancen hat.</div>
+
+        <div class="card">
+          <p style="font-size:12.5px;color:var(--mid);margin-bottom:4px">Gilt nur für <strong style="color:var(--text)">Managertransfers</strong> (Manager → Manager). Markt ist frei.</p>
+        </div>
+
+        <h3>Preisdeckel</h3>
+        <p style="font-size:13px;color:var(--mid);margin-bottom:6px">Aufschlag max. <strong>3× MW</strong>, höchstens <strong>10 Mio.</strong></p>
+        <table class="dt">
+          <thead><tr><th>MW</th><th>Aufschlag</th><th>Deckel</th><th style="text-align:right">Max</th></tr></thead>
+          <tr><td>800k</td><td>2,4 Mio.</td><td>—</td><td class="r">3,2 Mio.</td></tr>
+          <tr><td>3,33 Mio.</td><td>10 Mio.</td><td>10 Mio.</td><td class="r">13,33 Mio.</td></tr>
+          <tr><td>5 Mio.</td><td>15 Mio. → ged.</td><td>10 Mio.</td><td class="r">15 Mio.</td></tr>
+        </table>
+        <p class="note">Ab 3,33 Mio. MW greift immer der Deckel von 10 Mio.</p>
+
+        <h3>Kategorien</h3>
+        <p class="cat-label">Unter 5 Mio. MW</p>
+        <ul><li>Keine Ankündigung, keine Wartezeit</li></ul>
+        <p class="cat-label">5–20 Mio. MW</p>
+        <ul><li>Ankündigung in der Gruppe</li><li>Wartezeit: <strong>2 Stunden</strong> ab erstem Gebot</li></ul>
+        <p class="cat-label">Über 20 Mio. MW</p>
+        <ul><li>Ankündigung in der Gruppe</li><li>Wartezeit: <strong>12 Stunden</strong> ab erstem Gebot</li></ul>
+
+        <h3>Zuschlag</h3>
+        <ol>
+          <li>Nur das <strong>höchste zulässige Gebot</strong> zählt</li>
+          <li>Bei Gleichstand: wer in der <strong>H2H-Tabelle</strong> tiefer steht</li>
+          <li>Niemand muss verkaufen</li>
+        </ol>
+
+        <h3>Weitere Regeln</h3>
+        <ol>
+          <li><strong>Haltefrist:</strong> 3 Spieltage kein Weiterverkauf an Manager</li>
+          <li><strong>Paarungslimit:</strong> max. 2 Transfers zwischen gleichen Managern/Spieltag</li>
+          <li><strong>Kein Tausch:</strong> jeder Spieler einzeln anbieten</li>
+          <li><strong>Saisonende:</strong> letzte 3 Spieltage keine Managertransfers</li>
+          <li><strong>Kein Echtgeld:</strong> keine Gegenleistungen — Verstoß = Disqualifikation</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 3: § 3 -->
+    <div class="slide" data-idx="3">
+      <div class="slide-content">
+        <div class="sec-label">§ 3</div>
+        <div class="sec-title">Auto-Verkauf</div>
+        <div class="reason">Verhindert, dass ein Manager alle Top-Spieler hortet. Wer einen Spieler hat, der an einem Spieltag richtig abliefert, muss ihn wieder freigeben.</div>
+        <ol>
+          <li>Spieler ab <strong>300 Punkten</strong> am Spieltag → automatischer Verkauf zum MW an Kickbase</li>
+          <li>Ist ein Markttransfer → § 2 gilt nicht</li>
+          <li>Kader unter 11? Bis zum nächsten Spieltag auffüllen</li>
+        </ol>
+        <div class="card" style="text-align:center;margin-top:12px">
+          <p style="font-size:12.5px;color:var(--mid)"><strong style="color:var(--text)">Beispiel:</strong> Musiala holt 340 Punkte → wird automatisch zum Marktwert an Kickbase verkauft.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: § 4 -->
+    <div class="slide" data-idx="4">
+      <div class="slide-content">
+        <div class="sec-label">§ 4</div>
+        <div class="sec-title">Strafen</div>
+        <div class="reason">Klare Konsequenzen, damit die Regeln auch wirklich eingehalten werden. Beide Seiten eines illegalen Transfers werden bestraft.</div>
+        <table class="dt">
+          <thead><tr><th>Verstoß</th><th>Folge</th></tr></thead>
+          <tr><td>Verstoß gegen § 2</td><td>Transfer rückgängig + <strong>10 %</strong> für <strong>beide</strong></td></tr>
+          <tr class="warn"><td>Echtgeld</td><td>Disqualifikation</td></tr>
+        </table>
+        <div class="card" style="text-align:center;margin-top:12px">
+          <p style="font-size:12.5px;color:var(--mid)"><strong style="color:var(--text)">Beispiel:</strong> Illegaler Transfer für 8 Mio. → annulliert, beide verlieren 800k Budget.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5: § 5 -->
+    <div class="slide" data-idx="5">
+      <div class="slide-content">
+        <div class="sec-label">§ 5</div>
+        <div class="sec-title">Preisgeld</div>
+        <div class="reason">480 € Pot bei 16 Managern. Es gibt mehrere Wege zu gewinnen — nicht nur die Tabelle, sondern auch Spieltagssiege und Sonderpreise.</div>
+        <table class="dt">
+          <thead><tr><th>Kategorie</th><th style="text-align:right">Preis</th></tr></thead>
+          <tr><td>H2H 1. Platz</td><td class="r">150 €</td></tr>
+          <tr><td>H2H 2. Platz</td><td class="r">60 €</td></tr>
+          <tr><td>H2H 3. Platz</td><td class="r">30 €</td></tr>
+          <tr><td>Gesamttabelle 1.</td><td class="r">60 €</td></tr>
+          <tr><td>Gesamttabelle 2.</td><td class="r">30 €</td></tr>
+          <tr><td>Gesamttabelle 3.</td><td class="r">10 €</td></tr>
+          <tr><td>Spieltagssieger</td><td class="r">2 €/ST (68 €)</td></tr>
+          <tr><td>Tormaschine</td><td class="r">15 €</td></tr>
+          <tr><td>Matchwinner</td><td class="r">50 €</td></tr>
+          <tr><td>Worst Player</td><td class="r">7 €</td></tr>
+        </table>
+
+        <div class="explain">
+          <strong>Gesamttabelle</strong> = die klassischen Saisonpunkte aller Spieltage zusammen, wie im normalen Punktemodus.<br><br>
+          <strong>Spieltagssieger</strong> = der Manager mit den meisten Punkten am Spieltag bekommt 2 €. Beispiel: Du holst an Spieltag 12 die meisten Punkte → 2 € für dich.<br><br>
+          <strong>Tormaschine</strong> = ein Kickbase-Erfolg, der an den besten Torschützen vergeben wird. Wer diesen Erfolg über die Saison am häufigsten trägt, bekommt 15 €.<br><br>
+          <strong>Worst Player</strong> = die schlechteste Einzelleistung eines aufgestellten Spielers in der gesamten Saison. Beispiel: Knauff macht -120 Punkte an einem Spieltag und niemand ist schlechter → sein Manager bekommt 7 €.
+        </div>
+
+        <ul style="margin-top:10px">
+          <li>Bei Gleichstand wird geteilt</li>
+          <li>Bei anderer Teilnehmerzahl wird vor Saisonstart angepasst</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 6: § 6 -->
+    <div class="slide" data-idx="6">
+      <div class="slide-content">
+        <div class="sec-label">§ 6</div>
+        <div class="sec-title">Bestrafung</div>
+        <div class="reason">Der Spaßfaktor. Wer am Ende unten steht, muss dran glauben — was genau passiert, bestimmt das Rad.</div>
+        <div class="wheel">
+          <div class="icon">&#127905;</div>
+        </div>
+        <ol>
+          <li><strong>Letzter und Vorletzter</strong> der H2H-Tabelle drehen am Saisonende das Bestrafungsrad</li>
+          <li>Jeder Manager schlägt <strong>vor Beitritt</strong> eine Bestrafung vor</li>
+          <li>Zu extreme Vorschläge lehnt der Admin ab</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 7: Schluss + CTA -->
+    <div class="slide" data-idx="7">
+      <div class="slide-content">
+        <div class="sec-label">§ 7</div>
+        <div class="sec-title">Schluss</div>
+
+        <ol>
+          <li><strong>Streitfälle:</strong> 3 nicht beteiligte Manager per Zufall gelost — Mehrheit entscheidet</li>
+        </ol>
+
+        <div class="final-box">
+          <p>Dieses Regelwerk ist endgültig.</p>
+          <div class="sub">Es wird in der Gruppe nicht diskutiert. Wem die Regeln nicht passen, muss nicht mitspielen. Mit der Überweisung werden sie akzeptiert.</div>
+        </div>
+
+        <div class="iban-box">
+          <div class="label">Überweise 30 € und du bist dabei</div>
+          <code>DE72 1001 1001 2346 0960 02</code>
+          <div class="or">oder per Wise</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom">
+    <button class="btn btn-back hidden" id="backBtn" onclick="go(-1)">Zurück</button>
+    <button class="btn btn-primary" id="nextBtn" onclick="go(1)">Weiter</button>
+  </div>
+</div>
+
+<script>
+  var current = 0;
+  var total = document.querySelectorAll('.slide').length;
+  var prog = document.getElementById('progress');
+  var backBtn = document.getElementById('backBtn');
+  var nextBtn = document.getElementById('nextBtn');
+
+  for (var i = 0; i < total; i++) {
+    var d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    prog.appendChild(d);
+  }
+
+  function go(dir) {
+    var next = current + dir;
+    if (next < 0 || next >= total) return;
+
+    var slides = document.querySelectorAll('.slide');
+    var dots = document.querySelectorAll('.dot');
+
+    slides[current].classList.remove('active');
+    if (dir > 0) {
+      slides[current].classList.add('left');
+    }
+
+    var prev = current;
+    current = next;
+
+    setTimeout(function() {
+      slides[prev].classList.remove('left');
+      slides[current].classList.add('active');
+      slides[current].scrollTop = 0;
+
+      for (var j = 0; j < total; j++) {
+        dots[j].className = 'dot' + (j <= current ? ' done' : '') + (j === current ? ' active' : '');
+      }
+
+      backBtn.classList.toggle('hidden', current === 0);
+
+      if (current === total - 1) {
+        nextBtn.style.display = 'none';
+      } else {
+        nextBtn.style.display = '';
+        nextBtn.textContent = 'Weiter';
+      }
+    }, 30);
+  }
+</script>
